@@ -1,5 +1,8 @@
+'use client'
+
 import Image from "next/image";
 import { ThemeToggle } from "./ui/theme-toggle";
+import { LanguageToggle } from "./ui/language-toggle";
 
 export default function Header() {
     return (
@@ -13,8 +16,9 @@ export default function Header() {
 
             <h1 className='hidden md:block font-bold text-2xl'>Iventis Assignment</h1>
 
-            <div className='ml-auto'>
+            <div className='ml-auto flex gap-2'>
                 <ThemeToggle />
+                <LanguageToggle />
             </div>
         </div>
     )

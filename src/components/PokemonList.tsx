@@ -4,17 +4,9 @@ import { Pokemon } from '@/app/api/pokemon/route';
 import { useState, useEffect } from 'react';
 import { ColumnDef } from "@tanstack/react-table"
 import { DataTable } from './ui/data-table';
-import {
-    Sheet,
-    SheetContent,
-    SheetHeader,
-    SheetTitle,
-} from "@/components/ui/sheet"
-import { Heart, Ruler, Shield, Sword, Weight } from 'lucide-react';
-import { PokemenAbilityDetails, PokemonDetails } from '@/app/api/pokemon-details/route';
-import { LanguageToggle } from './ui/language-toggle';
+import { PokemonDetails } from '@/app/api/pokemon-details/route';
+import { Language } from './ui/language-toggle';
 import { useToast } from './ui/use-toast';
-import Image from 'next/image';
 import PokemonDetailsDraw from './PokemonDraw';
   
 
@@ -78,7 +70,8 @@ export default function PokemonList() {
     useEffect(() => {
         const fetchPokemonDetails = async () => {
             try {
-                const response = await fetch(`/api/pokemon-details?id=${encodeURIComponent(clickedPokemon!.url)}`);
+                const selectedLanguage: Language = localStorage.getItem("language") as Language || Language.English;
+                const response = await fetch(`/api/pokemon-details?id=${encodeURIComponent(clickedPokemon!.url)}&language=${selectedLanguage}`);
 
                 if (!response.ok) {
                     toast({
@@ -87,8 +80,18 @@ export default function PokemonList() {
                         description: "Error fetching Pokemon details",
                     });
                 }
+
                 const data: PokemonDetails = await response.json();
                 setPokemonDetails(data);
+
+                const rateLimitedAbility = data.abilities?.find(ability => ability.rateLimited === true);
+                if (rateLimitedAbility) {
+                    toast({
+                        variant: "destructive",
+                        title: "Rate Limit Reached",
+                        description: `The ability '${rateLimitedAbility.name}' was rate limited. Translation has been reset to English.`,
+                    });
+                }
 
             } catch (error) {
                 toast({

@@ -1,8 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 
+enum Language {
+    English = "English",
+    Yoda = "Yoda"
+}
+
 export interface PokemenAbilityDetails {
     name: string;
-    effects: string[];
+    effect: string;
+    rateLimited: boolean;
 }
 
 export interface PokemonDetails {
@@ -18,40 +24,66 @@ export interface PokemonDetails {
     abilities: PokemenAbilityDetails[];
 }
 
-async function fetchAbilityDetails(abilityUrl: string): Promise<PokemenAbilityDetails> {
-    try {
-        const response = await fetch(abilityUrl);
-        if (!response.ok) {
-            throw new Error(`Failed to fetch ability details from URL: ${abilityUrl}`);
-        }
-        
-        const data = await response.json();
+async function yodaTranslate(text: string) {
+    const response = await fetch(`https://api.funtranslations.com/translate/yoda.json?text=${text}`);
 
-        const englishEffectEntries = data.effect_entries.filter((effect: any) => effect.language.name === "en");
-        const effects = englishEffectEntries.map((effect: any) => effect.effect);
-
-        return {
-            name: data.name,
-            effects: effects[0]
-        };
-    
-    } catch (error) {
-        throw new Error(`Error fetching ability details: ${error}`);
+    if (response.status == 429) {
+        throw NextResponse.json({ message: 'Too many requests' }, { status: 429 });
     }
+
+    if (!response.ok) {
+        throw new Error(`Failed to fetch yoda translation`);
+    }
+
+    const data = await response.json();
+    return data.contents.translated;
 }
 
-async function mapJsonToPokemonDetails(data: any): Promise<PokemonDetails> {
+async function fetchAbilityDetails(abilityUrl: string, language: Language): Promise<PokemenAbilityDetails> {
+    const response = await fetch(abilityUrl);
+    if (!response.ok) {
+        throw new Error(`Failed to fetch ability details from URL: ${abilityUrl}`);
+    }
+    
+    const data = await response.json();
+
+    const englishEffectEntries = data.effect_entries.filter((effect: any) => effect.language.name === "en");
+    const effects = englishEffectEntries.map((effect: any) => effect.effect);
+
+    if (language == Language.Yoda) {
+        try {
+            const translatedEffect = await yodaTranslate(effects[0]);
+            return {
+                name: data.name,
+                effect: translatedEffect,
+                rateLimited: false
+            };
+        } catch (error) {
+            if (error instanceof NextResponse) {
+                console.error('Too many requests to Yoda translation API. Falling back to English effect.');
+                return {
+                    name: data.name,
+                    effect: effects[0],
+                    rateLimited: true
+                };
+            }
+            throw error;
+        }
+    }
+
+    return {
+        name: data.name,
+        effect: effects[0],
+        rateLimited: false
+    };
+}
+
+async function mapJsonToPokemonDetails(data: any, language: Language): Promise<PokemonDetails> {
     const abilityDetails: PokemenAbilityDetails[] = [];
 
     for (const ability of data.abilities) {
-        try {
-            const abilityData = await fetchAbilityDetails(ability.ability.url);
-            abilityDetails.push(abilityData);
-        }
-        
-        catch (error) {
-            console.error(`Error fetching ability details: ${error}`);
-        }
+        const abilityData = await fetchAbilityDetails(ability.ability.url, language);
+        abilityDetails.push(abilityData);
     }
 
     const details: PokemonDetails = {
@@ -78,12 +110,14 @@ export async function GET(request: NextRequest) {
         const id = params.get('id');
         const res = await fetch(`${id}`);
 
+        const language = params.get('language') as Language || Language.English;
+
         if (!res.ok) {
             throw new Error('Failed to fetch data from PokeAPI');
         }
     
         const data = await res.json();
-        const mappedData: PokemonDetails = await mapJsonToPokemonDetails(data);
+        const mappedData: PokemonDetails = await mapJsonToPokemonDetails(data, language);
 
         const response = NextResponse.json(mappedData, { status: 200 });
         response.headers.set('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=59');
@@ -91,6 +125,9 @@ export async function GET(request: NextRequest) {
         return response;
 
     } catch (error) {
+        if (error instanceof NextResponse) {
+            return NextResponse.json({ message: 'Too many requests'}, { status: 429 });
+        }
         return NextResponse.json({ message: error }, { status: 500 });
     }
 }

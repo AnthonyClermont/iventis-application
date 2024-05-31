@@ -2,7 +2,7 @@ import { PokemenAbilityDetails, PokemonDetails } from "@/app/api/pokemon-details
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "./ui/sheet";
 import Image from 'next/image'
 import { Heart, Ruler, Shield, Sword, Weight } from "lucide-react";
-import { LanguageToggle } from "./ui/language-toggle";
+import { useEffect } from "react";
 
 interface PokemonDetailsSheetProps {
     pokemonDetails: PokemonDetails | null;
@@ -66,23 +66,16 @@ const PokemonDetailsDraw = ({ pokemonDetails, isOpen, onOpenChange }: PokemonDet
                         </span>
                     </div>
 
-                    <div className='flex flex-col gap-4 w-[80%] mx-auto mt-6 pb-20'>
+                    <div className='flex flex-col gap-4 w-[80%] mx-auto mt-6 pb-6'>
                         <h3 className='font-bolder underline underline-offset-4 text-xl mx-auto'>Abilities</h3>
                         <ul className='flex gap-8 flex-col'>
                             {pokemonDetails.abilities?.map((ability: PokemenAbilityDetails, index: number) => (
                                 <li key={index}>
-                                    <li className='font-bold'>{ability.name}</li>
-                                    <li>{ability.effects}</li>
+                                    <p className='font-bold'>{ability.name}</p>
+                                    <p>{ability.effect}</p>
                                 </li>
                             ))}
                         </ul>
-                    </div>
-                    
-                    <div className='fixed right-10 bottom-6 bg-neutral-100 dark:bg-neutral-800 py-2 px-4 rounded-md'>
-                        <span className='flex gap-4 items-center'>
-                            <p className='text-sm'>Try out Yoda language?</p>
-                            <LanguageToggle />
-                        </span>
                     </div>
                 </>
             )}   
