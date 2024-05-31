@@ -16,9 +16,9 @@ export default function Header() {
 
             <h1 className='hidden md:block font-bold text-2xl'>Iventis Assignment</h1>
 
-            <div className='ml-auto flex gap-2'>
-                <ThemeToggle />
-                <LanguageToggle />
+            <div data-testid="toggle-div" className='ml-auto flex gap-2'>
+                <ThemeToggle/>
+                <LanguageToggle/>
             </div>
         </div>
     )

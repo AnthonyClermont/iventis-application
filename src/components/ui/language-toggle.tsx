@@ -47,7 +47,7 @@ export function LanguageToggle() {
                             src='/engLang.png'
                             width={25} 
                             height={25}
-                            alt="Yoda"   
+                            alt="English"   
                         />
                     }
                 </Button>

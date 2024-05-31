@@ -30,7 +30,7 @@ async function getAllPokemon(url: string, allResults: Pokemon[] = []): Promise<P
     }
 }
 
-export async function GET(request: NextRequest) {
+export async function GET() {
     try {
         const initialUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=60';
         const allPokemon = await getAllPokemon(initialUrl);

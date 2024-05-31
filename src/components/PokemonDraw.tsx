@@ -23,7 +23,7 @@ const PokemonDetailsDraw = ({ pokemonDetails, isOpen, onOpenChange }: PokemonDet
                     <SheetHeader>
                         <SheetTitle className='flex items-baseline justify-center mt-6 gap-2'>
                             <small>#{pokemonDetails.id}</small>
-                            <h2 className='text-2xl capitalize font-bold'>{pokemonDetails.name}</h2>
+                            <p className='text-2xl capitalize font-bold'>{pokemonDetails.name}</p>
                         </SheetTitle>
                     </SheetHeader>
 
