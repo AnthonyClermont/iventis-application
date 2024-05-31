@@ -34,7 +34,7 @@
 
 ## Live Application
 
-[Visit The Live Application](https://example.com)
+[Visit The Live Application](https://iventis-application.vercel.app/)
 
 ## Installation
 
