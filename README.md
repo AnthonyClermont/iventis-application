@@ -1,18 +1,18 @@
-<!-- PROJECT LOGO -->
 <div align="center">
-  <h3 align="center">Iventis Front End Interview Assignment</h3>
+  <h3 align="center">Iventis Frontend Interview Assignment</h3>
 
   <p align="center" style="max-width: 600px">
-    Small project as part of interview process. Providing information about pokemon's and their abilities, as well as effects being translated into Yoda language 👽.
+    Small project as part of the interview process. Providing information about Pokémon and their abilities, as well as effects translated into Yoda language 👽.
   </p>
 </div>
-
-
 
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
   <ol>
+    <li>
+      <a href='#about'>About</a>
+    </li>
     <li>
       <a href="#built-with">Built With</a>
     </li>
@@ -28,12 +28,39 @@
   </ol>
 </details>
 
+## About
+
+### Requirements Overview
+
+##### 1. I can see a list of available Pokémon names.
+Pokémon are put into a searchable datatable.
+
+##### 2. I can select a Pokémon to view more details about it including its abilities and their effects.
+Clicking on a row of the datatable will open the side-drawer containing more information about the selected Pokémon.
+
+##### 3. I can choose between English or Yoda for my languages, and this translates only the effects.
+Within the header, the user can select the chosen language using the dropdown.
+
+### Technical Requirements
+
+##### These are public APIs with rate limits. We would like to see that handled in the application.
+The application caches the response from the PokeAPI, therefore only needing to make the call once.
+
+The rate limit for the Yoda API is handled. When the request responds with a 429 error, the default English description is used with an error toast explaining to the user what occurred.
+
+##### Appropriate tests should be written.
+I found this requirement difficult due to my self-taught understanding and experience with React and Next.js. A lot of the test implementations I needed to learn.
+
+Using Jest, tests have been written for the application.
+
+🚨<strong>Disclaimer</strong>
+Because of the way Shadcn (the collection of Ui components) imports the actual jsx code, these such components have not got tests written for them. For example: ```button.tsx``` and ```input.tsx```.
 
 ## Built With
 
-[![Next][Next.js]][Next-url]
-[![React][React.js]][React-url]
-[![Tailwind][Tailwind.com]][Tailwind-url]
+[![Next.js][Next.js]][Next-url]
+[![React.js][React.js]][React-url]
+[![Tailwind CSS][Tailwind.css]][Tailwind-url]
 [![Jest][Jest.js]][Jest-url]
 
 ## Live Application
@@ -64,7 +91,7 @@
 [Next-url]: https://nextjs.org/
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://reactjs.org/
-[tailwind.com]: https://img.shields.io/badge/Tailwind-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white
+[Tailwind.css]: https://img.shields.io/badge/Tailwind%20CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white
 [Tailwind-url]: https://tailwindcss.com
 [Jest.js]: https://img.shields.io/badge/Jest-000000?style=for-the-badge&logo=jest&logoColor=white
 [Jest-url]: https://jestjs.io/
