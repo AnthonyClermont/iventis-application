@@ -2,7 +2,7 @@
 <div align="center">
   <h3 align="center">Iventis Front End Interview Assignment</h3>
 
-  <p align="center">
+  <p align="center" style="max-width: 600px">
     Small project as part of interview process. Providing information about pokemon's and their abilities, as well as effects being translated into Yoda language 👽.
   </p>
 </div>
