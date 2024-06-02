@@ -109,10 +109,6 @@ export async function GET(request: NextRequest) {
         
         const url = params.get('url');
 
-        if(!url) {
-            throw NextResponse.json({ message: 'URL search param not found'}, { status: 422 });
-        }
-
         const res = await fetch(`${url}`);
 
         const language = params.get('language') as Language ?? Language.English;
@@ -130,7 +126,7 @@ export async function GET(request: NextRequest) {
         return response;
 
     } catch (error) {
-        if (error instanceof NextResponse && error.status === 249) {
+        if (error instanceof NextResponse && error.status === 429) {
             return NextResponse.json({ message: 'Too many requests'}, { status: 429 });
         }
         
