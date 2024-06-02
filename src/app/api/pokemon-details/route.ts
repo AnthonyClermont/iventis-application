@@ -114,7 +114,7 @@ export async function GET(request: NextRequest) {
         const language = params.get('language') as Language ?? Language.English;
 
         if (!res.ok) {
-            return new Error('Failed to fetch data from PokeAPI');
+            throw new Error('Failed to fetch data from PokeAPI');
         }
     
         const data = await res.json();
