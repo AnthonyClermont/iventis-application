@@ -11,6 +11,12 @@
   <summary>Table of Contents</summary>
   <ol>
     <li>
+      <a href="#requirements-overview">Requirements Overview</a>
+    </li>
+    <li>
+      <a href="#technical-requirements">Technical Requirements</a>
+    </li>
+    <li>
       <a href="#built-with">Built With</a>
     </li>
     <li>
@@ -25,7 +31,7 @@
   </ol>
 </details>
 
-### Requirements Overview
+## Requirements Overview
 
 ##### 1. I can see a list of available Pokémon names.
 Pokémon are put into a searchable datatable.
@@ -36,7 +42,7 @@ Clicking on a row of the datatable will open the side-drawer containing more inf
 ##### 3. I can choose between English or Yoda for my languages, and this translates only the effects.
 Within the header, the user can select the chosen language using the dropdown.
 
-### Technical Requirements
+## Technical Requirements
 
 ##### These are public APIs with rate limits. We would like to see that handled in the application.
 The application caches the response from the PokeAPI, therefore only needing to make the call once.
