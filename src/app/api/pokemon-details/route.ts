@@ -132,11 +132,8 @@ export async function GET(request: NextRequest) {
     } catch (error) {
         if (error instanceof NextResponse && error.status === 249) {
             return NextResponse.json({ message: 'Too many requests'}, { status: 429 });
-        } 
+        }
         
-        else if (error instanceof NextResponse && error.status === 249)
-            return error;
-
         return NextResponse.json({ message: error }, { status: 500 });
     }
 }
