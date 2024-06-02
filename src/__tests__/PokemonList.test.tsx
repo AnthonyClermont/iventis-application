@@ -14,7 +14,7 @@ const mockPokemonDetails = {
     abilities: [],
 };
 
-const fetchMock = jest.fn().mockImplementation((input: RequestInfo, init?: RequestInit) => {
+const fetchMock = jest.fn().mockImplementation((input: RequestInfo) => {
     if (input === '/api/pokemon') {
         return Promise.resolve({
             ok: true,
@@ -22,7 +22,7 @@ const fetchMock = jest.fn().mockImplementation((input: RequestInfo, init?: Reque
         });
     } 
     
-    else if (input === '/api/pokemon-details?id=https%3A%2F%2Fpokeapi.co%2Fapi%2Fv2%2Fpokemon%2F1%2F&language=English') {
+    else if (input === '/api/pokemon-details?url=https%3A%2F%2Fpokeapi.co%2Fapi%2Fv2%2Fpokemon%2F1%2F&language=English') {
         return Promise.resolve({
             ok: true,
             json: () => Promise.resolve(mockPokemonDetails),
@@ -62,12 +62,12 @@ describe('PokemonList component', () => {
         render(<PokemonList />);
 
         await waitFor(() => {
-        expect(screen.getByText('Bulbasaur')).toBeInTheDocument();
+            expect(screen.getByText('Bulbasaur')).toBeInTheDocument();
         });
 
         screen.getByText('Bulbasaur').click();
         await waitFor(() => {
-        expect(fetchMock).toHaveBeenCalledWith('/api/pokemon-details?id=https%3A%2F%2Fpokeapi.co%2Fapi%2Fv2%2Fpokemon%2F1%2F&language=English');
+            expect(fetchMock).toHaveBeenCalledWith('/api/pokemon-details?url=https%3A%2F%2Fpokeapi.co%2Fapi%2Fv2%2Fpokemon%2F1%2F&language=English');
         });
     });
 });

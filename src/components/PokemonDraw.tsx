@@ -2,7 +2,6 @@ import { PokemenAbilityDetails, PokemonDetails } from "@/app/api/pokemon-details
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "./ui/sheet";
 import Image from 'next/image'
 import { Heart, Ruler, Shield, Sword, Weight } from "lucide-react";
-import { useEffect } from "react";
 
 interface PokemonDetailsSheetProps {
     pokemonDetails: PokemonDetails | null;
@@ -35,7 +34,7 @@ const PokemonDetailsDraw = ({ pokemonDetails, isOpen, onOpenChange }: PokemonDet
                         alt='pokemon image'
                     />
 
-                    <div className='flex my-10 gap-x-12 justify-center'>
+                    <div className='flex max-w-full flex-wrap gap-y-4 my-10 gap-x-12 justify-center'>
                         <span className='flex items-center gap-1'>
                             <Ruler />
                             Height:
@@ -49,7 +48,7 @@ const PokemonDetailsDraw = ({ pokemonDetails, isOpen, onOpenChange }: PokemonDet
                         </span>
                     </div>
 
-                    <div className='flex my-10 gap-x-12 justify-center'>
+                    <div className='flex max-w-full flex-wrap gap-y-4 my-10 gap-x-12 justify-center'>
                         <span className='flex items-center gap-1'>
                             <Heart />
                             <p className='font-bold pl-2'>{pokemonDetails.stats.hp}</p>
@@ -66,7 +65,7 @@ const PokemonDetailsDraw = ({ pokemonDetails, isOpen, onOpenChange }: PokemonDet
                         </span>
                     </div>
 
-                    <div className='flex flex-col gap-4 w-[80%] mx-auto mt-6 pb-6'>
+                    <div className='flex flex-col gap-4 sm:w-[80%] w-full mx-auto mt-6 pb-6'>
                         <h3 className='font-bolder underline underline-offset-4 text-xl mx-auto'>Abilities</h3>
                         <ul className='flex gap-8 flex-col'>
                             {pokemonDetails.abilities?.map((ability: PokemenAbilityDetails, index: number) => (

@@ -29,7 +29,7 @@ interface DataTableProps<TData, TValue> {
     onUrlClick: ({ name, url}: { name: string, url: string}) => void
 }
 
-export function DataTable<TData, TValue, TObject>({
+export function DataTable<TData, TValue>({
     columns,
     data,
     onUrlClick,
@@ -133,6 +133,7 @@ export function DataTable<TData, TValue, TObject>({
                 <Button
                     variant="outline"
                     size="sm"
+                    data-testid='next-button'
                     onClick={() => table.nextPage()}
                     disabled={!table.getCanNextPage()}
                 >

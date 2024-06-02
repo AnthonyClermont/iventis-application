@@ -6,7 +6,7 @@ import Header from "@/components/Header";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 
-const pressStart = Space_Grotesk({ subsets: ["latin"]});
+const spaceGrotesk = Space_Grotesk({ subsets: ["latin"]});
 
 export const metadata: Metadata = {
   title: "Pokemon Assignment",
@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={pressStart.className}>
+      <body className={spaceGrotesk.className}>
         <ThemeProvider
             attribute="class"
             defaultTheme="system"

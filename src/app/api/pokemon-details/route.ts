@@ -104,16 +104,21 @@ async function mapJsonToPokemonDetails(data: any, language: Language): Promise<P
 
 export async function GET(request: NextRequest) {
     try {
-        const url = new URL(request.url);
-        const params = new URLSearchParams(url.searchParams);
+        const reqUrl = new URL(request.url);
+        const params = new URLSearchParams(reqUrl.searchParams);
         
-        const id = params.get('id');
-        const res = await fetch(`${id}`);
+        const url = params.get('url');
 
-        const language = params.get('language') as Language || Language.English;
+        if(!url) {
+            throw NextResponse.json({ message: 'URL search param not found'}, { status: 422 });
+        }
+
+        const res = await fetch(`${url}`);
+
+        const language = params.get('language') as Language ?? Language.English;
 
         if (!res.ok) {
-            throw new Error('Failed to fetch data from PokeAPI');
+            return new Error('Failed to fetch data from PokeAPI');
         }
     
         const data = await res.json();
@@ -125,9 +130,13 @@ export async function GET(request: NextRequest) {
         return response;
 
     } catch (error) {
-        if (error instanceof NextResponse) {
+        if (error instanceof NextResponse && error.status === 249) {
             return NextResponse.json({ message: 'Too many requests'}, { status: 429 });
-        }
+        } 
+        
+        else if (error instanceof NextResponse && error.status === 249)
+            return error;
+
         return NextResponse.json({ message: error }, { status: 500 });
     }
 }

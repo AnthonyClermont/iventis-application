@@ -71,7 +71,7 @@ export default function PokemonList() {
         const fetchPokemonDetails = async () => {
             try {
                 const selectedLanguage: Language = localStorage.getItem("language") as Language || Language.English;
-                const response = await fetch(`/api/pokemon-details?id=${encodeURIComponent(clickedPokemon!.url)}&language=${selectedLanguage}`);
+                const response = await fetch(`/api/pokemon-details?url=${encodeURIComponent(clickedPokemon!.url)}&language=${selectedLanguage}`);
 
                 if (!response.ok) {
                     toast({
