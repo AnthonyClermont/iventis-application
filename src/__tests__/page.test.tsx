@@ -2,7 +2,11 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom'
 import Home from '@/app/page';
 
-jest.mock('../components/PokemonList', () => () => <div data-testid="pokemon-list">Mocked PokemonList</div>);
+jest.mock('../components/PokemonList', () => {
+    return function PokemonList() {
+        return <div data-testid="pokemon-list">Mocked PokemonList</div>;
+    };
+});
 
 describe('Home', () => {
     test('renders the main element', () => {
