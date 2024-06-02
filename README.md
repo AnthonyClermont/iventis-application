@@ -11,9 +11,6 @@
   <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href='#about'>About</a>
-    </li>
-    <li>
       <a href="#built-with">Built With</a>
     </li>
     <li>
@@ -27,8 +24,6 @@
     </li>
   </ol>
 </details>
-
-## About
 
 ### Requirements Overview
 
